@@ -7,11 +7,14 @@ metadata:
 spec: # Описание Pod
   containers: # Описание контейнеров внутри Pod
   - name: web # Название контейнера
-    image: atalabirchuk/otus:lab_1
+    image: atalabirchuk/otus:lab_1_v1
+    volumeMounts:
+    - name: app
+      mountPath: /app        
   initContainers:
   - name: init-myservice
     image: busybox:1.31.0
-    command: ['sh', '-c', 'wget -O- https://raw.githubusercontent.com/express42/otus-platformsnippets/master/Module-02/Introduction-to-Kubernetes/wget.sh | sh']
+    command: ['sh', '-c', 'wget -O- https://raw.githubusercontent.com/express42/otus-platform-snippets/master/Module-02/Introduction-to-Kubernetes/wget.sh | sh']
     volumeMounts:
     - name: app
       mountPath: /app
