@@ -39,7 +39,9 @@ rollback_deploy_job:
     script:
         - kubectl rollout undo deployment/frontend
     when: on_failure
-    
+
+В задании со * в спецификации с daemonset, чтобы повесить на ноды мастера нужно указывать tolerations в спецификации контейнеров
+
 все pod в namespace kube-system восстановились после удаления, потому, что стратегия развертывания указана как Deployment т.е. строго поддерживать режим конфигурации в заданном виде. Если я не ошибаюсь
 
 
