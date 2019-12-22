@@ -17,4 +17,4 @@ spec: # Описание Pod
       mountPath: /app
   volumes:
   - name: app
-    emptyDir: {}    
+    emptyDir: {}
