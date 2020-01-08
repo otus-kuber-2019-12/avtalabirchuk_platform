@@ -1,0 +1,11 @@
+# без применения конфига посмотреть yaml фаил 
+#kubectl create namespace prometheus --dry-run -o yaml
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: prometheus
+spec: {}
+status: {}
