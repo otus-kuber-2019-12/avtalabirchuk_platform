@@ -1,5 +1,9 @@
 # kubernetes-security lesson - 3
-
+- создание сервисного аккаунта и выделение ему прав админа
+    - просмотр существующих ролей kubectl get clusterrole
+    - просмотр существующих сервисных аккаунтов kubectl get serviceaccounts
+    - смотрим какой тип авторизации задан команда kubectl cluster-info dump | grep authorization-mode
+    - 
 
 # avtalabirchuk_platform
 - github
