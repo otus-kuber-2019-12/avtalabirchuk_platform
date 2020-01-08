@@ -19,6 +19,6 @@ roleRef:
   name: all-pod-reader
 subjects:
 - kind: Group
-  name: system:serviceaccounts
+  name: system:serviceaccounts:prometheus
   apiGroup: rbac.authorization.k8s.io
   namespace: prometheus
