@@ -9,7 +9,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: bob # под этим именем мы потом увидим этот RoleBinding
-  namespace: kube-system
+  namespace: default
   labels:
     # Add these permissions to the "admin" and "edit" default roles.
     rbac.authorization.k8s.io/aggregate-to-admin: "true"  
@@ -20,4 +20,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount # Group, ServiceAccount
   name: bob # имя чувствительно к регистру
-  namespace: kube-system
+  namespace: default
