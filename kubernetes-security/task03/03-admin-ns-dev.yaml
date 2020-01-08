@@ -1,24 +1,17 @@
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: jane # под этим именем мы потом увидим этот RoleBinding
-rules:
-- apiGroups: ["rbac.authorization.k8s.io"]
-  resources: ["pods"]
-  verbs: ["get", "watch", "list"]
-  resourceNames: ["admin"]
----
-apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: jane-binding
+  name: jane # под этим именем мы потом увидим этот RoleBinding
   namespace: dev
+  labels:
+    # Add these permissions to the "admin" and "edit" default roles.
+    rbac.authorization.k8s.io/aggregate-to-admin: "true"  
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: jane
+  name: admin
 subjects:
-- apiGroup: rbac.authorization.k8s.io
-  kind: User
-  name: jane
+- kind: ServiceAccount # Group, ServiceAccount
+  name: jane # имя чувствительно к регистру
+  namespace: dev
