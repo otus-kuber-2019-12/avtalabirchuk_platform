@@ -6,6 +6,8 @@
     - Используя плагин kubectl auth can-i запросить доступ kubectl auth can-i get deployments --as system:serviceaccount:default:bob 
     - помотреть сервисные аккаунты в namespace  kubectl get sa -n prometheus
     - Есть отдельные роли это RoleBindings и ClusterRoleBindings - распространяются на обычне роли и для кластера
+    - Можно создавать обычные роли kind: Role, а можно для всего кластера kind: ClusterRole
+        - если мы хотим указать все сервисные аккаунты то указываем system:serviceaccounts и выделяем отдельный namespace
 # avtalabirchuk_platform
 - github
     - https://github.com/otus-kuber-2019-12/avtalabirchuk_platform
