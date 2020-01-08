@@ -1,4 +1,17 @@
+# kubernetes-security lesson - 3
+
+
 # avtalabirchuk_platform
+- github
+    - https://github.com/otus-kuber-2019-12/avtalabirchuk_platform
+- ДЗ Лекции
+    - https://otus.ru/learning/42977/#/
+- deployment strategy blue/green Canary
+    - https://www.weave.works/blog/kubernetes-deployment-strategies
+- zero downtime jenkins
+    - https://kubernetes.io/blog/2018/04/30/zero-downtime-deployment-kubernetes-jenkins/
+- max Unavailable max Surge
+    - https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
 # otus
 otus couses kubernetes
 
