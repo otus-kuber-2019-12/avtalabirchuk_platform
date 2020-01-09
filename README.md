@@ -1,4 +1,29 @@
+# kubernetes-security lesson - 3(ссылка на оф. дкументацию по RBAC Authorization https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
+- создание сервисного аккаунта и выделение ему прав админа
+    - просмотр существующих ролей kubectl get clusterrole
+    - просмотр существующих сервисных аккаунтов kubectl get serviceaccounts
+    - смотрим какой тип авторизации задан команда kubectl cluster-info dump | grep authorization-mode
+    - Используя плагин kubectl auth can-i запросить доступ kubectl auth can-i get deployments --as system:serviceaccount:default:bob 
+    - помотреть сервисные аккаунты в namespace  kubectl get sa -n prometheus
+    - Есть отдельные роли это RoleBindings и ClusterRoleBindings - распространяются на обычне роли и для кластера
+    - Можно создавать обычные роли kind: Role, а можно для всего кластера kind: ClusterRole
+        - если мы хотим указать все сервисные аккаунты то указываем system:serviceaccounts и выделяем отдельный namespace
+    - можно управлять 3мя кластер ролями как для отдельного NameSpace так и для всего кластера. labels называются: 
+        - rbac.authorization.k8s.io/aggregate-to-view: "true"  
+        - rbac.authorization.k8s.io/aggregate-to-edit: "true"  
+        - rbac.authorization.k8s.io/aggregate-to-admin: "true"  
+        - в метадате указывается принадлежность к name space
 # avtalabirchuk_platform
+- github
+    - https://github.com/otus-kuber-2019-12/avtalabirchuk_platform
+- ДЗ Лекции
+    - https://otus.ru/learning/42977/#/
+- deployment strategy blue/green Canary
+    - https://www.weave.works/blog/kubernetes-deployment-strategies
+- zero downtime jenkins
+    - https://kubernetes.io/blog/2018/04/30/zero-downtime-deployment-kubernetes-jenkins/
+- max Unavailable max Surge
+    - https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
 # otus
 otus couses kubernetes
 
