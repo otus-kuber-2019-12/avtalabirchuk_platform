@@ -1,4 +1,4 @@
-# kubernetes-security lesson - 3
+# kubernetes-security lesson - 3(ссылка на оф. дкументацию по RBAC Authorization https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
 - создание сервисного аккаунта и выделение ему прав админа
     - просмотр существующих ролей kubectl get clusterrole
     - просмотр существующих сервисных аккаунтов kubectl get serviceaccounts
@@ -8,6 +8,11 @@
     - Есть отдельные роли это RoleBindings и ClusterRoleBindings - распространяются на обычне роли и для кластера
     - Можно создавать обычные роли kind: Role, а можно для всего кластера kind: ClusterRole
         - если мы хотим указать все сервисные аккаунты то указываем system:serviceaccounts и выделяем отдельный namespace
+    - можно управлять 3мя кластер ролями как для отдельного NameSpace так и для всего кластера. labels называются: 
+        - rbac.authorization.k8s.io/aggregate-to-view: "true"  
+        - rbac.authorization.k8s.io/aggregate-to-edit: "true"  
+        - rbac.authorization.k8s.io/aggregate-to-admin: "true"  
+        - в метадате указывается принадлежность к name space
 # avtalabirchuk_platform
 - github
     - https://github.com/otus-kuber-2019-12/avtalabirchuk_platform
