@@ -1,3 +1,31 @@
+# kubernetes-networking установка minikube https://kubernetes.io/docs/tasks/tools/install-minikube/
+- Readiness probe добавляется в области container
+    -  kubectl describe позволяет посмотреть статус почему контейнер не ready Conditions
+- команда 'ps aux | grep my_web_server_process' не имеет смысла потому, что она создает новый процесс PID XX и всегда возвращает 1 при любом создании, и смысла такого подхода нет т.к. будет создан новый процесс и всегда будет отдаваться(1) состояние как работает
+- удалить не дожидаясь подтверждения ресурса kubectl delete pod/web --grace-period=0 --force
+- describe детальная информация о подах, деплойментах и т.п.
+- смотретб в кубере происходящие события kubectl get events --watch
+- посмотреть и получить сервисы kubectl get services
+- почитать про IP-Tables https://msazure.club/kubernetes-services-and-iptables/
+- можно править конфиги сервера сразу kubectl --namespace kube-system
+edit configmap/kube-proxy или в dashboard - включение minikube dashboard minikube dashboard
+- описание настройки IPVS vs. IPTABLES https://github.com/kubernetes/kubernetes/blob/master/pkg/proxy/ipvs/README.md
+    - отчистить iptables создаем файлик
+        <!-- *nat
+        -A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE
+        COMMIT
+        *filter
+        COMMIT
+        *mangle
+        COMMIT -->
+    - применяем iptables-restore /tmp/iptables.cleanup Теперь надо подождать  примерно 30 секунд), пока kubeproxy восстановит правила для сервисов
+- установить, что-нибудь в minikube заходим в fedora  командой toolbox
+- установка MetalLB
+  - kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.8.0/manifests/metallb.yaml ( в проде не делать а разобраться, что и за чем) l2 балансировщик(нужно поднять КонфигМап где прописывается ip диапазон и сервис где указывается тип LB LoadBalancer )
+- посмотреть логи пода kubectl --namespace metallb-system logs pod/controller-XXXXXXXX-XXXXXX
+- minikube ip ( узнать ip minikube)
+- полезные фичи IPVS https://kubernetes.io/blog/2018/07/09/ipvs-based-in-cluster-load-balancing-deep-dive/
+    - алгоритмы балансировки тут https://github.com/kubernetes/kubernetes/blob/1cb3b5807ec37490b4582f22d991c043cc468195/pkg/proxy/apis/config/types.go#L185
 # kubernetes-security lesson - 3(ссылка на оф. дкументацию по RBAC Authorization https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
 - создание сервисного аккаунта и выделение ему прав админа
     - просмотр существующих ролей kubectl get clusterrole
