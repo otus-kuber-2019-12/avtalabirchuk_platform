@@ -26,6 +26,10 @@ edit configmap/kube-proxy или в dashboard - включение minikube dash
 - minikube ip ( узнать ip minikube)
 - полезные фичи IPVS https://kubernetes.io/blog/2018/07/09/ipvs-based-in-cluster-load-balancing-deep-dive/
     - алгоритмы балансировки тут https://github.com/kubernetes/kubernetes/blob/1cb3b5807ec37490b4582f22d991c043cc468195/pkg/proxy/apis/config/types.go#L185
+ - для того, чтобы открыть порты tcp/udp нужно создать 2 сервиса с общим ключом и разными именами (общий ключь https://github.com/danderson/metallb/issues/317)    - dns проверка осуществляется web-svc-cip.default.svc.cluster.local
+      - где web-svc-cip имя сервиса
+      - где default имя namespace
+      - svc.cluster.local - общие имена
 # kubernetes-security lesson - 3(ссылка на оф. дкументацию по RBAC Authorization https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
 - создание сервисного аккаунта и выделение ему прав админа
     - просмотр существующих ролей kubectl get clusterrole
