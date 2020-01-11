@@ -30,6 +30,8 @@ edit configmap/kube-proxy или в dashboard - включение minikube dash
       - где web-svc-cip имя сервиса
       - где default имя namespace
       - svc.cluster.local - общие имена
+- ingress
+  - установка kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
 # kubernetes-security lesson - 3(ссылка на оф. дкументацию по RBAC Authorization https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
 - создание сервисного аккаунта и выделение ему прав админа
     - просмотр существующих ролей kubectl get clusterrole
