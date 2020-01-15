@@ -10,7 +10,14 @@ spec: # Описание Pod
     image: atalabirchuk/otus:lab_1_v1
     volumeMounts:
     - name: app
-      mountPath: /app        
+      mountPath: /app 
+    livenessProbe:
+      tcpSocket:
+        port: 8000     
+    readinessProbe:
+      httpGet:
+        path: /index.html
+        port: 80      
   initContainers:
   - name: init-myservice
     image: busybox:1.31.0
