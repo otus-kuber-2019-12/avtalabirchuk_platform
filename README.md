@@ -1,6 +1,13 @@
+# полездные команды 
+ - зайти в определенный контейнер в namespace в определенном поде 
+    - kubectl  -n django-talabir exec -it web-django-5f85fb6ffc-xnb2p -c netutils-1 bash
+ - задать использование kubectl с разными кластерами
+    - kubectl config get-contexts
+    - kubectl config use-context minikube 
 # kubernetes-networking установка minikube https://kubernetes.io/docs/tasks/tools/install-minikube/
 - Readiness probe добавляется в области container
     -  kubectl describe позволяет посмотреть статус почему контейнер не ready Conditions
+- dashboard официкальная репа google(https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml)
 - команда 'ps aux | grep my_web_server_process' не имеет смысла потому, что она создает новый процесс PID XX и всегда возвращает 1 при любом создании, и смысла такого подхода нет т.к. будет создан новый процесс и всегда будет отдаваться(1) состояние как работает
 - удалить не дожидаясь подтверждения ресурса kubectl delete pod/web --grace-period=0 --force
 - describe детальная информация о подах, деплойментах и т.п.
@@ -33,6 +40,9 @@ edit configmap/kube-proxy или в dashboard - включение minikube dash
 - ingress
   - установка kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
   - Если мы хотим направлять тарафик через ingress, то обязательно нужно размещать сервис(Ingress) в том же namespace иначе работать не будет
+ - rewrite хороший пример с dashboard 
+   - https://github.com/kubernetes/ingress-nginx/tree/master/docs/examples/rewrite
+   - https://github.com/kubernetes/ingress-nginx/issues/683
 # kubernetes-security lesson - 3(ссылка на оф. дкументацию по RBAC Authorization https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
 - создание сервисного аккаунта и выделение ему прав админа
     - просмотр существующих ролей kubectl get clusterrole

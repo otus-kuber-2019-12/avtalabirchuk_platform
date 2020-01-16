@@ -39,7 +39,8 @@ metadata:
 spec:
   ports:
     - port: 80
-      targetPort: 8443
+      targetPort: 9090
+      protocol: TCP
   selector:
     k8s-app: kubernetes-dashboard
 
@@ -190,27 +191,28 @@ spec:
           image: kubernetesui/dashboard:v2.0.0-beta8
           imagePullPolicy: Always
           ports:
-            - containerPort: 8443
+            - containerPort: 9090
               protocol: TCP
           args:
             - --enable-skip-login
-            - --auto-generate-certificates
+            #- --auto-generate-certificates
+            - --disable-settings-authorizer
             - --namespace=kubernetes-dashboard
             # Uncomment the following line to manually specify Kubernetes API server Host
             # If not specified, Dashboard will attempt to auto discover the API server and connect
             # to it. Uncomment only if the default does not work.
             # - --apiserver-host=http://my-address:port
           volumeMounts:
-            - name: kubernetes-dashboard-certs
-              mountPath: /certs
-              # Create on-disk volume to store exec logs
+            # - name: kubernetes-dashboard-certs
+            #   mountPath: /certs
+            #   # Create on-disk volume to store exec logs
             - mountPath: /tmp
               name: tmp-volume
           livenessProbe:
             httpGet:
-              scheme: HTTPS
+              scheme: HTTP
               path: /
-              port: 8443
+              port: 9090
             initialDelaySeconds: 30
             timeoutSeconds: 30
           securityContext:
@@ -219,9 +221,9 @@ spec:
             runAsUser: 1001
             runAsGroup: 2001
       volumes:
-        - name: kubernetes-dashboard-certs
-          secret:
-            secretName: kubernetes-dashboard-certs
+        # - name: kubernetes-dashboard-certs
+        #   secret:
+        #     secretName: kubernetes-dashboard-certs
         - name: tmp-volume
           emptyDir: {}
       serviceAccountName: kubernetes-dashboard
