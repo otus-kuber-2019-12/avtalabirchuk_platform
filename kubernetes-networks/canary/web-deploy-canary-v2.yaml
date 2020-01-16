@@ -10,7 +10,7 @@ spec:
   selector:
     app: web
     version: v2.0.0
-  type: ClusterIP
+#  type: ClusterIP
 #  clusterIP: None
   ports:
   - protocol: TCP

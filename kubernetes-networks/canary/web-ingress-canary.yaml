@@ -15,12 +15,12 @@ metadata:
     #nginx.ingress.kubernetes.io/canary-by-header-value: "123"
 spec:
   rules:
-  - http:
+  - host: my-app.com
+    http:
       paths:
-      - path: /app
-        backend:
+      - backend:
           serviceName: web-svc
-          servicePort: 8000
+          servicePort: 80
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
@@ -32,16 +32,16 @@ metadata:
     app: web  
   annotations:
     kubernetes.io/ingress.class: "nginx"
-
+    nginx.ingress.kubernetes.io/rewrite-target: /
     # Enable canary and send 10% of traffic to version 2
     nginx.ingress.kubernetes.io/canary: "true"
-    nginx.ingress.kubernetes.io/canary-weight: "100"
+    #nginx.ingress.kubernetes.io/canary-weight: "10"
     nginx.ingress.kubernetes.io/canary-by-header: "123"
 spec:
   rules:
-  - http:
+  - host: my-app.com
+    http:
       paths:
-      - path: /app
-        backend:
+      - backend:
           serviceName: web-svc-v2
-          servicePort: 8000
+          servicePort: 80
