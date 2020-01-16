@@ -43,6 +43,11 @@ edit configmap/kube-proxy или в dashboard - включение minikube dash
  - rewrite хороший пример с dashboard 
    - https://github.com/kubernetes/ingress-nginx/tree/master/docs/examples/rewrite
    - https://github.com/kubernetes/ingress-nginx/issues/683
+ - canary deployment 
+    - example https://github.com/ContainerSolutions/k8s-deployment-strategies/blob/master/canary/nginx-ingress/ingress-v1.yaml
+    - check send Header host curl -s -H "Host: my-app.com"  http://172.17.255.2
+    - check send Header host and Header указанный в ingreee curl -s -H "Host: my-app.com" -H "123: always"  http://172.17.255.2
+    - Если, что ошибка интересная в Ingress Pod - annot merge alternative backend canary-web-svc-v2-80 into hostname  that does not exist указывающая на то, что hostname не существует
 # kubernetes-security lesson - 3(ссылка на оф. дкументацию по RBAC Authorization https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
 - создание сервисного аккаунта и выделение ему прав админа
     - просмотр существующих ролей kubectl get clusterrole
