@@ -67,3 +67,16 @@ spec:
       resources:
         requests:
           storage: 10Gi
+# --- 
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: miniomc
+#   labels:
+#     name: miniomc
+# spec:
+#   containers:
+#   - name: miniomc
+#     image: minio/mc
+#     command: ["/bin/sh"]
+#     args: ["-c", "while true; do echo hello; sleep 10;done"]
