@@ -1,5 +1,13 @@
 # Volumes, storages, StatefulSet
-
+ - MinIO - - локальным S3 хранилищем
+ - StateFulSet
+   - это под у которого всегда имеется уникальное имя, сетевой адрес, volumes
+ - secrets 
+   - из файла kubectl -n test-v1 create secret generic minio-access --from-file=./username.txt --from-file=./password.txt
+   - из строки kubectl -n test-v1 create secret generic dev-db-secret --from-literal=username=devuser --from-literal=password='S!B\*d$zDsb'
+   - kubectl get secret
+   - документация secret https://kubernetes.io/docs/concepts/configuration/secret/
+   - стратегия для pod  мапим секреты в виде volume указываем secret {secretName: minio-access-file} 
 # полездные команды 
  - зайти в определенный контейнер в namespace в определенном поде 
     - kubectl  -n django-talabir exec -it web-django-5f85fb6ffc-xnb2p -c netutils-1 bash
@@ -12,7 +20,9 @@
 - dashboard официкальная репа google(https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml)
   - создание админского пользователя для доступа в dashboard 
     - https://medium.com/@kanrangsan/creating-admin-user-to-access-kubernetes-dashboard-723d6c9764e4
+    - аннатацию ингрессу добавить на https backend-protocol!
 - команда 'ps aux | grep my_web_server_process' не имеет смысла потому, что она создает новый процесс PID XX и всегда возвращает 1 при любом создании, и смысла такого подхода нет т.к. будет создан новый процесс и всегда будет отдаваться(1) состояние как работает
+
 - удалить не дожидаясь подтверждения ресурса kubectl delete pod/web --grace-period=0 --force
 - describe детальная информация о подах, деплойментах и т.п.
 - смотретб в кубере происходящие события kubectl get events --watch
