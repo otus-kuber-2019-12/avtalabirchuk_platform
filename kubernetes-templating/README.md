@@ -40,3 +40,13 @@ chartmuseum -
 helm 2 хранил информацию о релизах в configMap 
  - kubectl get configmaps -n kube-system
 helm 3 хранит информацию о релизах в secrets
+
+Провекрка yaml файлов с инструментом Kubeval
+
+описание использования и последовательность действий
+- для начала нам нужно завернуть в пакет наш chart 
+ - helm package charts/test1
+- получится chart tar архив, нам нужно его положить в chartmuseum пример curl --data-binary name.tgz https://chartmuseumv2.34.89.193.23.nip.io/api/charts
+- чтобы воспользоваться нашим chart нам нужно добавить наш репозитарий
+  - helm repo add name(dir) https://chartmuseumv2.34.89.193.23.nip.io
+  - helm dependency update
