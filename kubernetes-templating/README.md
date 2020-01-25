@@ -50,3 +50,10 @@ helm 3 хранит информацию о релизах в secrets
 - чтобы воспользоваться нашим chart нам нужно добавить наш репозитарий
   - helm repo add name(dir) https://chartmuseumv2.34.89.193.23.nip.io
   - helm dependency update
+
+### установка harbor CHART VERSION 1.1.2
+- kubectl create ns harbor
+- helm upgrade --install harbor harbor/harbor --wait \
+--namespace=harbor \
+--version=1.1.2 \
+-f /home/andrew/kubernetis/github-otus/avtalabirchuk_platform/kubernetes-templating/harbor/values.yaml
