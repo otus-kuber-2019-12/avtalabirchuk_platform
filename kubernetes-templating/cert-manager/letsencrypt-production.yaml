@@ -7,11 +7,13 @@ spec:
     # You must replace this email address with your own.
     # Let's Encrypt will use this to contact you about expiring
     # certificates, and issues related to your account.
-    email: talabirchuk.otus@gmail.com
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    email: otus@34.89.193.23.nip.io
+    server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       # Secret resource used to store the account's private key.
-      name: example-issuer-account-key
+      #name: example-issuer-account-key
+      name: letsencrypt-production
+    http01: {}
     # Add a single challenge solver, HTTP01 using nginx
     solvers:
     - http01:

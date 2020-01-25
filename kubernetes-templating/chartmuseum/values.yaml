@@ -230,11 +230,11 @@ ingress:
 ## Chartmuseum Ingress hostnames
 ## Must be provided if Ingress is enabled
 ##
- hosts:
-   - name: chartmuseum.34.89.193.23.nip.io
-     path: /
-     tls: true
-     tlsSecret: chartmuseum.34.89.193.23.nip.io
+  hosts:
+    - name: chartmuseumv2.34.89.193.23.nip.io
+      path: /
+      tls: true
+      tlsSecret: chartmuseumv2.34.89.193.23.nip.io
 #    - name: chartmuseum.domain2.com
 #      path: /
 #

@@ -36,3 +36,7 @@ Add helm repo
         helm upgrade --install cert-manager jetstack/cert-manager --wait \
         --namespace=cert-manager \
         --version=0.9.0
+chartmuseum - 
+helm 2 хранил информацию о релизах в configMap 
+ - kubectl get configmaps -n kube-system
+helm 3 хранит информацию о релизах в secrets
