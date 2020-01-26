@@ -152,4 +152,9 @@ helm 3 хранит информацию о релизах в secrets
  - https://github.com/splunk/qbec
 
 - Kustomize
-
+ - установка brew install kustomize
+ - запуск 
+   - kustomize build overlays/dev || kubectl kustomize overlays/dev
+   - kustomize build overlays/hipster-shop-prod || kubectl kustomize overlays/prod
+   - kubectl apply -k overlays/dev
+- какие поля можно кастомизировать https://github.com/kubernetes-sigs/kustomize/blob/master/docs/fields.md
