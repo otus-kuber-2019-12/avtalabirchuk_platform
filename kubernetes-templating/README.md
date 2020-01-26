@@ -57,7 +57,7 @@ helm 3 хранит информацию о релизах в secrets
 --namespace=harbor1 \
 --version=1.1.2 \
 -f /home/andrew/kubernetis/github-otus/avtalabirchuk_platform/kubernetes-templating/harbor/values.yaml
-- default logs\pass admin/Harbor1234
+- default logs\pass admin/Harbor12345
 - получить информацию о release
  - kubectl get secrets -n harbor -l owner=helm
 ### использование helmfile https://github.com/roboll/helmfile
@@ -91,6 +91,63 @@ helm 3 хранит информацию о релизах в secrets
    - обновить зависимость 'helm dependency update hipster-shop'
    - создается фаил charts/frontend-0.1.0.tgz из указанного репозитория file://../frontend
    - обновляем проект helm upgrade --install hipster-shop hipster-shop --namespace hipster-shop
+- переопределение переменной из values.yaml задается командой --set 
+  --set frontend.service.ports.nodePort=31234
+   - helm upgrade --install hipster-shop hipster-shop --namespace hipster-shop --set frontend.service.ports.nodePort=31234 
+     - это в том случае если мы обращаемся к зависимости frontend(или другой)
+     - Если мы хотим использовать не зависимость то указываем абсолютный путь до переменной которую мы хотим переопределить service.ports.nodePort=31234
+Задание со * создаем свой chart
+ - список всех chart stable
+  - https://github.com/helm/charts/tree/master/stable
+  - пример с sentry dependencies redis https://github.com/helm/charts/blob/master/stable/sentry/values.yaml
 
-   
+Секреты в helm:
+ - в linux подключить репозиторй brew, установить зависимости:
+   - brew install sops
+   - brew install gnupg2
+   - brew install gnu-getopt
+   - helm plugin install https://github.com/futuresimple/helm-secrets --version 2.0.2
+- выполнить команды:
+ - генерация ключа PGP
+ - gpg --full-generate-key (отвечаем на все вопросы)
+ - посмотреть полученный ключ 
+   - gpg -k вывод
+   /home/andrew/.gnupg/pubring.kbx
+    -------------------------------
+    pub   rsa3072 2020-01-26 [SC] [годен до: 2021-01-25]
+        B6C1FADA020AABD195B3546AAAA099B70A8872E5
+    uid         [  абсолютно ] atalabirchuk <talabirchuk.av@gmail.com>
+    sub   rsa3072 2020-01-26 [E] [годен до: 2021-01-25]
+    - шифрование файла 
+     - sops -e -i --pgp <$ID> secrets.yaml ( где ID вывод изп предыдущей команды B6C1FADA020AABD195B3546AAAA099B70A8872E5)
+- расшифровка файла
+ - любая из команд
+    # helm secrets
+    helm secrets view secrets.yaml
+    # sops
+    sops -d secrets.yaml
+- deploy secrets в проект 
+    helm secrets upgrade --install frontend kubernetes-templating/frontend --namespace
+    hipster-shop \
+    -f kubernetes-templating/frontend/values.yaml \
+    -f kubernetes-templating/frontend/secrets.yam
+- kubecfg установка    
+  - brew install kubecfg
+  - проверка версии kubecfg version
+  - пример файла конфигурации можно посмотреть в репозитории https://github.com/bitnami/kubecfg/blob/master/examples/guestbook.jsonnet
+  - в целом все конфигурируется через фаил services.jsonnet
+    - нужно добавить библиотеку перез конфигурированием (используем готовую от битнами https://github.com/bitnami-labs/kube-libsonnet/)
+      - local kube = import "https://raw.githubusercontent.com/bitnami-labs/kube-libsonnet/master/kube.libsonnet";
+    - логика использования
+      - 1 Пишем общий для сервисов https://raw.githubusercontent.com/express42/otus-platform-snippets/master/Module-04/05-Templating/hipster-shop-jsonnet/common.jsonnet , включающий описание service и deployment
+      - 2. наследуеся(https://raw.githubusercontent.com/express42/otus-platform-snippets/master/Module-04/05-Templating/hipster-shop-jsonnet/payment-shipping.jsonnet) от него, указывая параметры для конкретных сервисов
+    - запустить генерацию манифестов можно командой 
+      - kubecfg show services.jsonnet
+    - выполняем полученные манифесты kubecfg update services.jsonnet --namespace hipster-shop
+
+- Задание со * jsonnet Выберите еще один микросервис из состава hipster-shop (https://otus.ru/media-private/b7/f3/%D0%94%D0%97_%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F_%D0%BC%D0%B0%D0%BD%D0%B8%D1%84%D0%B5%D1%81%D1%82%D0%BE%D0%B2-26527-b7f384.pdf?hash=84zS3twNLIRZygG769NntA&expires=1579976827) страница 67
+ - https://github.com/deepmind/kapitan
+ - https://github.com/splunk/qbec
+
+- Kustomize
 
