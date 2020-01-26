@@ -70,3 +70,15 @@ helm 3 хранит информацию о релизах в secrets
 - разделение frontend hipstershop
   - создание заготовка helm 
    - helm create kubernetes-templating/frontend
+- обязательно указываем значения по умолчанию пример
+  - targetPort: {{ .Values.service.ports.targetPort | default "8080" }}
+  - условия, если мы хотим использовать условия, то нужно указывать его в нужном столбце yaml -     - пример(структура https://helm.sh/docs/chart_template_guide/control_structures/)
+     -    {{- if eq .Values.service.type.type "NodePort" }}    
+     -    nodePort: {{ .Values.service.ports.nodePort | default "30675" }}
+     -    {{- end }}
+ - переменные можно создавать и присваивать их
+  - пример переменных
+    -{{- if .Values.ingress.enabled -}}
+    -{{- $fullName := include "kubernetes-templating.fullname" . -}}
+    -{{- $svcPort := .Values.service.port -}}
+
