@@ -52,8 +52,19 @@ helm 3 хранит информацию о релизах в secrets
   - helm dependency update
 
 ### установка harbor CHART VERSION 1.1.2
-- kubectl create ns harbor
+- kubectl create ns harbor1
 - helm upgrade --install harbor harbor/harbor --wait \
---namespace=harbor \
+--namespace=harbor1 \
 --version=1.1.2 \
 -f /home/andrew/kubernetis/github-otus/avtalabirchuk_platform/kubernetes-templating/harbor/values.yaml
+- default logs\pass admin/Harbor1234
+- получить информацию о release
+ - kubectl get secrets -n harbor -l owner=helm
+### использование helmfile https://github.com/roboll/helmfile
+- установка brew install helmfile
+- использование и примеры
+  - пример let'encrypt https://github.com/cloudposse/helmfiles/blob/master/releases/cert-manager.yaml
+  - https://gist.github.com/zloeber/e280030aa819be22653809bb1d353c0d
+  - запуск helmfile --log-level=debug --environment production apply (можно без дебага)
+### написание своего helmchart
+

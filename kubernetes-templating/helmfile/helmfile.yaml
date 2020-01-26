@@ -57,7 +57,7 @@ releases:
       showlogs: true
       command: "/bin/sh"
       args:
-        - "-c"    
-        - <-
-          kubectl get namespace "{{`{{ .Release.Namespace }}`}}" >/dev/null 2>&1 || kubectl create namespace "{{`{{ .Release.Namespace }}`}}"
+        - "-c"
+        - >-
+          kubectl get namespace "{{`{{ .Release.Namespace }}`}}" >/dev/null 2>&1 || kubectl create namespace "{{`{{ .Release.Namespace }}`}}";
   <<: *template
