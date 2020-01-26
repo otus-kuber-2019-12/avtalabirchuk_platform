@@ -60,6 +60,8 @@ helm 3 хранит информацию о релизах в secrets
 - default logs\pass admin/Harbor12345
 - получить информацию о release
  - kubectl get secrets -n harbor -l owner=helm
+- создать свой чарт и запушить его в harbor
+  - helm package frontend
 ### использование helmfile https://github.com/roboll/helmfile
 - установка brew install helmfile
 - использование и примеры
