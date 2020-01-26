@@ -1,3 +1,4 @@
+# templating - шаблонизация, можно почиать в директории kubernetes-templating/Readme.md
 # Volumes, storages, StatefulSet
  - MinIO - - локальным S3 хранилищем
  - StateFulSet
