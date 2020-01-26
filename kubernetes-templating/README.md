@@ -81,4 +81,16 @@ helm 3 хранит информацию о релизах в secrets
     -{{- if .Values.ingress.enabled -}}
     -{{- $fullName := include "kubernetes-templating.fullname" . -}}
     -{{- $svcPort := .Values.service.port -}}
+- удаление своего helm chart  "helm delete frontend -n hipster-shop"
+- dependencies (зависимости helm) https://helm.sh/docs/topics/chart_best_practices/dependencies/
+  - указываются в файле Chart.yaml содержание такого рода
+    dependencies:
+    - name: frontend
+        version: 0.1.0
+        repository: "file://../frontend" - репозиторий где находится эта зависимость
+   - обновить зависимость 'helm dependency update hipster-shop'
+   - создается фаил charts/frontend-0.1.0.tgz из указанного репозитория file://../frontend
+   - обновляем проект helm upgrade --install hipster-shop hipster-shop --namespace hipster-shop
+
+   
 

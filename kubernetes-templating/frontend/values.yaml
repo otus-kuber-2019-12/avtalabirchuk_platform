@@ -11,4 +11,4 @@ service:
   ports:
     port: 80
     targetPort: 8080
-    nodePort: 30677
+    nodePort: 30678
