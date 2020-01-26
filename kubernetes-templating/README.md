@@ -67,4 +67,6 @@ helm 3 хранит информацию о релизах в secrets
   - https://gist.github.com/zloeber/e280030aa819be22653809bb1d353c0d
   - запуск helmfile --log-level=debug --environment production apply (можно без дебага)
 ### написание своего helmchart
-
+- разделение frontend hipstershop
+  - создание заготовка helm 
+   - helm create kubernetes-templating/frontend
