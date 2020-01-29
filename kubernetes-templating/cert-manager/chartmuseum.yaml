@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: chartmuseum
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Issuer
+metadata:
+  name: test-selfsigned
+  namespace: chartmuseum
+spec:
+  selfSigned: {}
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: selfsigned-cert
+  namespace: chartmuseum
+spec:
+  commonName: chartmuseum.34.89.193.23.nip.io
+  secretName: selfsigned-cert-tls
+  issuerRef:
+    name: test-selfsigned
