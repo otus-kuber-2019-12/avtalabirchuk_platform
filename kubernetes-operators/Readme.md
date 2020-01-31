@@ -1,51 +1,20 @@
 Lesson 8 kubernetes-operator
   - Создаем обьект типа MYSQL в API
-  - CustomREsourceDefinition - это ресурс для определния других ресурсов (далее CRD)
+  - CustomREsourceDefinition - это ресурс для определния других ресурсов (CRD)
     - avtalabirchuk_platform/kubernetes-operators/deploy/crd.yml
- - после этого можно создать customresourseDefenition
  ## взаимодейсвтие с обьектами
   - kubectl get crd
   - kubectl get mysqls.otus.homework
   - kubectl describe mysqls.otus.homework mysql-instance
-## сделать обязательно поле к заполнению
+  - kubectl describe jobs.batch restore-mysql-instance-job
+  - удобный вариант получения имени пода
+    - export MYSQLPOD=$(kubectl get pods -l app=mysql-instance -o jsonpath="{.items[*].metadata.name}")
+    - echo $MYSQLPOD
+    - kubectl exec -it $MYSQLPOD bash
+## сделать обязательно поле к заполнению required
  - https://stackoverflow.com/questions/49822794/kubernetes-custom-resource-definition-required-field
  - необходимо указать значение required в виде списка значения которые обязательны
    - avtalabirchuk_platform/kubernetes-operators/deploy/crd.yml
 # Оператор включает в себя CustomResourceDefinition и сustom сontroller
-# Почему мы видим, что было создано до того момента как запустили оператора. В этом и суть вся оператора, он нам показывает все созданные обьекты
+# Почему мы видим, что было создано до того момента как запустили оператора. В этом и суть вся оператора, он нам показывает все созданные обьекты если мы его запускаем первый раз
 # Получить поды по имени export MYSQLPOD=$(kubectl get pods -l app=mysql-instance -o jsonpath="{.items[*].metadata.name}")
-
-Метрики и мониторинг
-HPA - horizontal pod Autoscaler
-
-USE metod
- - resource
- - utilization
- - satuation
- - errors
-Red metod
-
-prometheus - федерация (жирный прометеус)
- кросс сервисная федерация
-prometheus Thanos - sidecar (контейнер)
-
-у minio есть distributed mode - вроде это как раз к HA относится. 
-https://docs.min.io/docs/distributed-minio-quickstart-guide.html 
-- установка через зельм слайд 52 из 79 время 1:15
-загрузка дашбордов в графану 1:30  59 страница
-
-nodepinger дашборд в графане
-
-HelmChart Prometheus
-https://github.com/helm/charts/tree/master/stable/prometheus-operator
-
-https://prometheus.io/docs/alerting/configuration/#email_config 
-
-
-GOLDPINGER -  карта связанности кластера - 1:40
-Мониторинг сертификатов через прометея
-mrgreyves 
-Vladimir D 
-
-
-skydive.network умеет строить связность https://habr.com/ru/post/472724/ 
