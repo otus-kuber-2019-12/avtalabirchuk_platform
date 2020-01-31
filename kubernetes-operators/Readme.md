@@ -18,3 +18,15 @@ Lesson 8 kubernetes-operator
 # Оператор включает в себя CustomResourceDefinition и сustom сontroller
 # Почему мы видим, что было создано до того момента как запустили оператора. В этом и суть вся оператора, он нам показывает все созданные обьекты если мы его запускаем первый раз
 # Получить поды по имени export MYSQLPOD=$(kubectl get pods -l app=mysql-instance -o jsonpath="{.items[*].metadata.name}")
+- вывод команды  kubectl get jobs
+  - NAME                         COMPLETIONS   DURATION   AGE
+  - backup-mysql-instance-job    1/1           1s         27m
+  - restore-mysql-instance-job   1/1           3m13s      28m
+- kubectl exec -it $MYSQLPOD -- mysql -potuspassword -e "select * from test;" otus-database
+  - mysql: [Warning] Using a password on the command line interface can be insecure.
+  - +----+-----------------+
+  - | id | name            |
+  - +----+-----------------+
+  - |  1 | some data-23333 |
+  - |  2 | some data-99999 |
+  - +----+-----------------+
