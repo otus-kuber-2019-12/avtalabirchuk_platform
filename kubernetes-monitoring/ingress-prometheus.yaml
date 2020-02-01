@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: prometheus  
+  annotations:
+    certmanager.k8s.io/acme-challenge-type: http01
+    certmanager.k8s.io/cluster-issuer: letsencrypt-production
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+  labels:
+    app: prometheus
+spec:
+  rules:
+  - host: prometheus.34.89.193.23.nip.io
+    http:
+      paths:
+      - backend:
+          serviceName: prometheus-operator-158056-prometheus
+          servicePort: 9090
+        path: /
+  tls:
+  - hosts:
+    - prometheus.34.89.193.23.nip.io
+    secretName: prometheus.34.89.193.23.nip.io
+status:
+  loadBalancer:
+    ingress:
+    - ip: 34.89.128.146

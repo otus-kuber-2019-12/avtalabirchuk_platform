@@ -1,4 +1,17 @@
-
+Установка prometheus оператор:
+ - repo https://github.com/helm/charts/tree/master/stable/prometheus-operator
+ - helm repo update
+ - применение values.yaml
+   - helm install stable/prometheus-operator --wait -f ./values.yaml
+- запуск проекта
+  - установка оператора prometheus идем пить кофе, в миникб так и не поставилось, а вот в GKE потребовалось минут 10-15
+  - применяем deployment
+  - применяем service
+  - применяем service-monitor
+  - открываем графану ч.з. nginx kubectl apply -f ingress-grafana.yaml
+  - заходим на ресурс https://grafana.34.89.193.23.nip.io/
+  - импортируем стандартный дашборд nginx находится в папке проекта
+  - смотрим за стандартными метриками nginx
 Метрики и мониторинг
 HPA - horizontal pod Autoscaler
 
@@ -13,11 +26,14 @@ prometheus - федерация (жирный прометеус)
  кросс сервисная федерация
  хранение метрик отдельные хранилища
   - victoria Metrics
-  - Cotrex
-  - Thanos
+  - Cortrex
+  - Thanos (схема таноса стр. 44)
+   - prometheus Thanos - sidecar (контейнер) собирает и предает дальше метрики
   - clickhouse ^_^
-  
-prometheus Thanos - sidecar (контейнер)
+- deadmen switch - если не поступают метрики от промитеуса, прийдет уведомление, что прометеус не работает
+- перезапустить прометея с измененным конфигом 
+  - http://127.0.0.1:9090/-/reload
+
 
 у minio есть distributed mode - вроде это как раз к HA относится. 
 - https://docs.min.io/docs/distributed-minio-quickstart-guide.html 

@@ -43,7 +43,19 @@ spec:
       - name: nginx-exporter
         image: fish/nginx-exporter
         args:
-          - -nginx.scrape_uri="http://127.0.0.1:8000/basic_status"
+          - -nginx.scrape_uri=http://127.0.0.1:8000/basic_status
         ports:
           - name: nginx-exporter
             containerPort: 9113
+        livenessProbe:
+          httpGet:
+            path: /metrics
+            port: 9113
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /metrics
+            port: 9113
+          initialDelaySeconds: 20
+          periodSeconds: 10
