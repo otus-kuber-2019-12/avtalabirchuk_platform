@@ -9,5 +9,5 @@ RUN chmod -R 777 /var/cache/* && chmod -R 777 /var/run/
 
 WORKDIR /app
 RUN chmod -R 777 /app
-USER otus
+#USER otus
 CMD /usr/sbin/nginx -g 'daemon off;'
