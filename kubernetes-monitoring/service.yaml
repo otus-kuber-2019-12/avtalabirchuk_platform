@@ -1,0 +1,22 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-test
+  namespace: monitoring
+  labels:
+    app: nginx-test
+spec:
+#  clusterIP: 10.96.251.58
+  type: NodePort
+  ports:
+   - name: monitoring
+     protocol: TCP
+     port: 80
+     targetPort: 8000
+   - name: nginx-exporter
+     protocol: TCP
+     port: 9113
+     targetPort: 9113
+     nodePort: 30680
+  selector:
+    app: monitoring
