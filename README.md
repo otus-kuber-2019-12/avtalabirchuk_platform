@@ -1,3 +1,4 @@
+# kubernetes-vault фаил readme находится в директории kubernetes-vault
 # kubernetes-operator фаил Reame.md находится в директории kubernetes-operator
 # templating - шаблонизация, можно почиать в директории kubernetes-templating/Readme.md
 # Volumes, storages, StatefulSet
