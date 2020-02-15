@@ -208,12 +208,12 @@
  - бекенд для волта это consul
  - установка consul
   - git clone https://github.com/hashicorp/consul-helm.git
-  - helm install -g ../consul-helm -f --wait ./values.yaml
+  - helm install consul consul-helm
     - для работы по https: нужно использовать gossipEncryption (внутренний протокол consul)
   - установка vault
     - установка через helm
       - git clone https://github.com/hashicorp/vault-helm.git
-      - helm install -g ./vault-helm -f ./vault-helm/values.yaml
+      - helm install vault ./vault-helm -f ./vault-helm/values.yaml
     - генерация Useal and ROOT Token
       - k exec -it vault-helm-1581168473-0 -- vault operator init --key-shares=1 --key-threshold=1
       - проверить статус инициализации
@@ -221,7 +221,7 @@
     - посмотреть статус каждого пода
      - k exec -it vault-helm-1581168473-0 env | grep VAULT
        - VAULT_ADDR=http://127.0.0.1:8200 исходя из этого нужно распечатать каждый под
-     - распечатка каждого пода k exec -it vault-helm-1581168473-{1,2,3} -- vault operator unseal 'GMdySPFre0tLAijmivQX0qB9JVJZAWvTwo7NMBJ8MSM=
+     - распечатка каждого пода k exec -it vault-helm-1581168473-{1,2,3} -- vault operator unseal 'GMdySPFre0tLAijmivQX0qB9JVJZAWvTwo7NMBJ8MSM='
     - посмотреть список доступных авторизаций
       - k exec -it vault-helm-1581168473-0 -- vault auth list (должна быть ошибка)
     - залогинется в vault с root login
@@ -297,9 +297,9 @@
    - проверяем
     - k exec -it vault-helm-1581168473-0 -- vault secrets list
   - kubectl exec -it vault-helm-1581168473-0 -- vault secrets tune -max-lease-ttl=87600h pki
-  - kubectl exec -it vault-helm-1581168473-0 -- vault write -field=certificate pki/root/generate/internal common_name="exmaple.ru" ttl=87600h > CA_cert.crt
+  - kubectl exec -it vault-helm-1581168473-0 -- vault write -field=certificate pki/root/generate/internal common_name="example.ru" ttl=87600h > CA_cert.crt
 - пропишем урлы для ca и отозванных сертификатов
- - kubectl exec -it vault-helm-1581168473-0 -- vault write pki/config/urls issuing_certificates="http://vault:8200/v1/pki/ca" crl_distribution_points="http://vault:8200/v1/pki/crl"
+ - kubectl exec -it vault-helm-1581168473-0 -- vault write pki/config/urls issuing_certificates="http://vault-helm-1581168473:8200/v1/pki/ca" crl_distribution_points="http://vault-helm-1581168473:8200/v1/pki/crl"
 - создадим промежуточный сертификат
  - kubectl exec -it vault-helm-1581168473-0 -- vault secrets enable --path=pki_int pki
  - kubectl exec -it vault-helm-1581168473-0 -- vault secrets tune -max-lease-ttl=87600h pki_int
@@ -315,7 +315,32 @@
  - создаем сертификат
   - kubectl exec -it vault-helm-1581168473-0 -- vault write pki_int/issue/example-dot-ru common_name="gitlab.example.ru" ttl="24h"
  - отзываем сертификат
-  - kubectl exec -it vault-helm-1581168473-0 -- vault write pki_int/revoke serial_number="3c:18:2c:4a:83:36:17:82:75:ec:db:fd:90:65:4a:58:8c:34:83:91"
+  - kubectl exec -it vault-helm-1581168473-0 -- vault write pki_int/revoke serial_number="01:26:a5:78:c6:31:12:c5:f5:c6:b8:db:0d:6a:83:0a:a9:10:b3:ae"
+
+# включаем TLS
+1) меняем параметры в values.yaml
+ -   extraEnvironmentVars: {}
+       VAULT_ADDR: https://localhost:8200
+       VAULT_CACERT: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt 
+-   extraVolumes: []
+    - type: secret
+      name: vault-certs
+      path: null # default is `/vault/userconfig`
+ - проверка
+   - curl https://10.1.9.26:8200/ui/vault/auth
+
+   
+(sed 's/\x1b\[[0-9;]*m//g')
+
+# включаем работу с сертификатами время 2.16.21 nginx
+ - kubectl exec -it vault-helm-1581168473-0 -- vault secrets enable pki
+   - kubectl exec -it vault-helm-1581168473-0 -- vault path-help pki
+- настройки все можно посмотреть на "vault secrets engine pki"
+
+
+
+
+
 
 - пример получения секретов из vault
   - k exec -it vault-helm-1581168473-0 -- vault secrets list
