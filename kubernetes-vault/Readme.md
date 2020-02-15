@@ -348,18 +348,19 @@
  - kubectl get csr vaultcsr -o jsonpath='{.status.certificate}'  | base64 --decode > vault.crt
 7) создаем секрет из полученных сертификатов
   - kubectl create secret tls vault-certs --cert=vault.crt --key=vault_gke.key
-8) применяем конфиг helm-vault
-
-(sed 's/\x1b\[[0-9;]*m//g')
-
-# включаем работу с сертификатами время 2.16.21 nginx
- - kubectl exec -it vault-helm-1581168473-0 -- vault secrets enable pki
-   - kubectl exec -it vault-helm-1581168473-0 -- vault path-help pki
-- настройки все можно посмотреть на "vault secrets engine pki"
-
-
-
-
+8) применяем конфиг helm-vault c https
+ - нужно удалить старый helm(с http) и задиплоить по новой helm с https
+ - убедиться, что сервис работает можно обратившись на внешний адрес https://34.89.101.195:8200/ по http сейчас не зайти. полученный сертификат
+  ```
+  Общее имя (CN)	localhost
+  Организация (O)	Perflabs
+  Подразделение (OU)	Development
+  Общее имя (CN)	2f6bae7b-d60a-433c-9c37-fe634c116765
+  Организация (O)	<Не является частью сертификата>
+  Подразделение (OU)	<Не является частью сертификата>
+  Дата выдачи	суббота, 15 февраля 2020 г., 12:43:24
+  Срок действия	четверг, 13 февраля 2025 г., 12:43:24
+  ```
 
 
 - пример получения секретов из vault
