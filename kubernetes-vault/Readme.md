@@ -328,8 +328,28 @@
       path: null # default is `/vault/userconfig`
  - проверка
    - curl https://10.1.9.26:8200/ui/vault/auth
+1) создаем секреты в кластере
+ - kubectl create secret generic consul-gossip-encryption-key  --from-literal=key=ConsOtus
+ - правим значения values helm-consul
+  gossipEncryption:  
+    secretName: consul-gossip-encryption-key  
+    secretKey: key  
+2) создаем vault key
+ - `openssl genrsa -out vault_gke.key 4096`
+3) создаем vault_gke_csr.cnf
+ - `vi vault_gke_csr.cnf`
+4) создаем request
+ - openssl req -config vault_gke_csr.cnf -new -key vault_gke.key -nodes -out vault.csr
+5) создаем kind: CertificateSigningRequest vault_csr.yaml 
+ - где request: (cat ./vault.csr | base64 | tr -d '\n') из полученного файла
+ - т.к. сертификат самоподписанный его нужно заапрувить 
+  - k certificate approve vaultcsr
+6) получаем подписанный сертификат
+ - kubectl get csr vaultcsr -o jsonpath='{.status.certificate}'  | base64 --decode > vault.crt
+7) создаем секрет из полученных сертификатов
+  - kubectl create secret tls vault-certs --cert=vault.crt --key=vault_gke.key
+8) применяем конфиг helm-vault
 
-   
 (sed 's/\x1b\[[0-9;]*m//g')
 
 # включаем работу с сертификатами время 2.16.21 nginx
