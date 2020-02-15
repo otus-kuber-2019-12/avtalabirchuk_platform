@@ -1,4 +1,7 @@
 # безопасность hashicorp vault username for assignee erlong15
+## полездные ссылки
+ - https://learn.hashicorp.com/vault/identity-access-management/vault-agent-k8s#step-1-create-a-service-account
+ - guides https://github.com/hashicorp/vault-guides.git
 ## вывод helm status vault
     NAME: vault-helm-1581168473  
     LAST DEPLOYED: Sat Feb  8 16:27:54 2020  
