@@ -1,0 +1,31 @@
+---
+tolerations:
+- operator: "Exists"
+backend:
+  type: es
+  es:
+    host: elasticsearch-master
+rawConfig: |
+  @INCLUDE fluent-bit-service.conf
+  @INCLUDE fluent-bit-input.conf
+  @INCLUDE fluent-bit-filter.conf
+  @INCLUDE fluent-bit-output.conf
+  [FILTER]
+      Name modify
+      Match *
+      Remove time
+      Rename @timestamp es_time
+
+
+
+# # лекция делаем возможность запускаться в определенном пуле
+# nodeSelector:
+#   cloud.google.com/gke-nodepool: infra-pool
+# # лекция делаем возможность запускаться в определенном пуле  
+# #лекция задаем деплой на определенные ноды
+# tolerations:
+# - key: node-role
+#   operator: Equal
+#   value: infra
+#   effect: NoSchedule  
+# #лекция задаем деплой на определенные ноды

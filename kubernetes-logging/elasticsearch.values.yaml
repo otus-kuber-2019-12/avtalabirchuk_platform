@@ -1,0 +1,12 @@
+---
+# лекция делаем возможность запускаться в определенном пуле
+nodeSelector:
+  cloud.google.com/gke-nodepool: infra-pool
+# лекция делаем возможность запускаться в определенном пуле  
+#лекция задаем деплой на определенные ноды
+tolerations:
+- key: node-role
+  operator: Equal
+  value: infra
+  effect: NoSchedule  
+#лекция задаем деплой на определенные ноды

@@ -1,0 +1,24 @@
+---
+# лекция делаем возможность запускаться в определенном пуле
+nodeSelector:
+  cloud.google.com/gke-nodepool: infra-pool
+# лекция делаем возможность запускаться в определенном пуле  
+#лекция задаем деплой на определенные ноды
+tolerations:
+- key: node-role
+  operator: Equal
+  value: infra
+  effect: NoSchedule  
+#лекция задаем деплой на определенные ноды
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  path: /
+  hosts:
+    - kibana.34.65.100.157.xip.io
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
