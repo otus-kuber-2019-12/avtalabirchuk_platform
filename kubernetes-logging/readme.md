@@ -86,4 +86,14 @@
        - добавляем репозиторий
          - helm repo add loki https://grafana.github.io/loki/charts
          - обновляем helm repo update
-      - установка helm upgrade --install promtail loki/promtail --set "loki.serviceName=loki" --namespace=observability
+      - установка helm upgrade --install promtail loki/promtail --set "loki.serviceName=loki" --namespace=observability -f ./loki.promtail.values.yaml
+  - устанавливаем serviceMonitor в nginx-ingress
+    - controller: metrics: serviceMonitor: в файле nginx-ingress.values.yaml
+  - добавляем dashboard в grafana [grafana_dashboard_nginx_ingress](https://github.com/kubernetes/ingress-nginx/tree/master/deploy/grafana/dashboards)
+  - добавляем в dashboard Loki logs
+    - {app="nginx-ingress"}
+    - visualization logs
+  - полездная утилита [kubrnetes_event_logger](https://github.com/max-rocket-internet/k8s-event-logger)
+
+## Задание со *№2
+ - 
