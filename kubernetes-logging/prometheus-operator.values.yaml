@@ -1,0 +1,21 @@
+  ## Configure additional grafana datasources
+  ## ref: http://docs.grafana.org/administration/provisioning/#datasources
+prometheus:
+  prometheusSpec:
+    retention: 3d
+    ### Check this labels: kubectl get prometheus -o yaml -n monitoring
+    serviceMonitorNamespaceSelector: {} ### Namespace for ServiceMonitors select
+    serviceMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelector: {} ### matchLabels for ServiceMonitors select
+    # serviceMonitorSelector:
+    # matchLabels:
+    # prometheus: kube-prometheus
+    # release: prometheus-cluster-monitoring
+  service:
+    nodePort: 31060
+grafana:
+  adminPassword: admin
+  additionalDataSources:
+    - name: loki
+      type: loki
+      url: http://loki:3100

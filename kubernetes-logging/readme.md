@@ -68,4 +68,22 @@
    - [metrics_elasticsearch](https://habr.com/ru/company/yamoney/blog/358550/)
   - [KQL](https://www.elastic.co/guide/en/kibana/7.5/kuery-query.html) функции kibana
   - ingress logs format string [ingress_log](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#log-format-escape-json)
-  
+   - прописываем их в controller: > config: [ingress_helm_chart](https://github.com/helm/charts/blob/master/stable/nginx-ingress/values.yaml)
+  - визуализация
+    - пример построения запросов:
+      - visualize: pannel option: Pannel filter: kubernetes.labels.app:nginx-ingress and status>=500 and status<=599
+    - dashboard: add an existing visualize
+## LOKI grafana
+ - [loki_install](https://github.com/grafana/loki/blob/v1.3.0/docs/installation/README.md)
+ - [promtail_install](https://github.com/grafana/loki/blob/master/docs/clients/promtail/installation.md)
+ - [grafana_chart](https://github.com/grafana/loki/tree/master/production/helm)
+   - helm LOKI:
+     - helm repo add loki https://grafana.github.io/loki/charts
+     - helm upgrade --install loki loki/loki --namespace=observability --set promtail.enabled=true
+     - модернизация прометеуса, чтобы datasource добавлялся автоматически Loki
+      - [helm_chart_prometheus](https://github.com/helm/charts/blob/master/stable/prometheus-operator/values.yaml)
+     - promtail
+       - добавляем репозиторий
+         - helm repo add loki https://grafana.github.io/loki/charts
+         - обновляем helm repo update
+      - установка helm upgrade --install promtail loki/promtail --set "loki.serviceName=loki" --namespace=observability
