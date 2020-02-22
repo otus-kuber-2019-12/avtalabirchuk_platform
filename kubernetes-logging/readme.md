@@ -50,6 +50,7 @@
     - из логов видно, что есть дублирующиеся поля
       - "Duplicate field 'time'\n at [Source: org.elasticsearch.common.bytes. ....
       - изменили фаил конфигурации
+    - задание со звездочкой можно воспользоваться премером решением переименовать поле @timestamp ```Having to rename it is patchwork, so, think about providing better defaults instead.```
  - устанавливаем prometheus
    - helm upgrade --install prometheus stable/prometheus-operator --namespace observability
    - устанавливаем exporter elastic
@@ -60,3 +61,11 @@
    - k drain <node name> --ignore-daemonsets
   - восстановить ноды
    - kubectl uncordon <node name>
+  - Для получения логов из nginx-ingress необходимо раскатать fluentd на все ноды
+    - параметры раскатывания на все ноды нужно указать
+     - tolerations: operator: "Exists"(если мы укажем equal то он установит fluentbit на определенные ноды)
+  - allertmanager [Prometheus_alert_manager_elastic](https://github.com/justwatchcom/elasticsearch_exporter/blob/master/examples/prometheus/elasticsearch.rules)
+   - [metrics_elasticsearch](https://habr.com/ru/company/yamoney/blog/358550/)
+  - [KQL](https://www.elastic.co/guide/en/kibana/7.5/kuery-query.html) функции kibana
+  - ingress logs format string [ingress_log](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#log-format-escape-json)
+  
