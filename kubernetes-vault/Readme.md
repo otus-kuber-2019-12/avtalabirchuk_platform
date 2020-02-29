@@ -364,10 +364,28 @@
   Дата выдачи	суббота, 15 февраля 2020 г., 12:43:24
   Срок действия	четверг, 13 февраля 2025 г., 12:43:24
   ```
+# Проверяем получение сертификата nginx:
+ - [статья с примером](https://www.vaultproject.io/docs/secrets/pki/)
+ - создаем политику для записи в храналище сертификатов
+  - kubectl cp ../otus-policy.hcl vault-0:/tmp/
+ - применяем политику в волт
+  - k exec -it vault-0 -- vault policy write otus-policy /tmp/otus-policy.hcl
+- Если не применить получаем лог с conteiner init 
+```k logs nginx-tls-849bc75b8d-2zhc4 -c vault-agent-init
+2020/02/29 10:01:52.979612 [WARN] (view) vault.write(pki_int/issue/example-dot-ru -> 3aba4493): vault.write(pki_int/issue/example-dot-ru -> 3aba4493): Error making API request.
+
+URL: PUT http://vault:8200/v1/pki_int/issue/example-dot-ru
+Code: 403. Errors:
+
+* 1 error occurred:
+        * permission denied
+```
+- прикладываю полученные сертификаты из vault см PR
+
 
 
 - пример получения секретов из vault
-  - k exec -it vault-helm-1581168473-0 -- vault secrets list
+  - k exec -it vault-0 -- vault secrets list
 - пример создания секретов ил литерала
  - kubectl -n test-v1 create secret generic dev-db-secret --from-literal=username=devuser --from-literal=password='S!B\*d$zDsb'
 - пример создания секретов из файла
