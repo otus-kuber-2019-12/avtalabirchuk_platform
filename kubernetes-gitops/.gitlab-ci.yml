@@ -1,0 +1,24 @@
+image: docker:latest
+services:
+- docker:dind
+
+stages:
+  - build
+  - push
+
+build-docker-images-tags:
+  stage: build
+ before_script:
+   - echo $DOCKER_PASSWORD && echo $DOCKER_LOGIN
+   - echo $DOCKER_PASSWORD | docker login -u $DOCKER_LOGIN --password-stdin  
+  script:
+    - export TAG=$CI_COMMIT_TAG
+    - export REPO_PREFIX=atalabirchuk$svcname
+    - ./hack/make-docker-images.sh
+   #- for i in $(docker images | grep atalabirchuk | awk '{print $1":"$2}'); do docker push $i ; done
+ after_script:
+   - docker logout
+  only:
+    - tags
+  tags:
+    - shell

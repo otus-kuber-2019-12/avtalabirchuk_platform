@@ -1,0 +1,5 @@
+image:
+  repository: atalabirchuk/loadgenerator
+  tag: latest
+ingress:
+  host: 35.242.165.12

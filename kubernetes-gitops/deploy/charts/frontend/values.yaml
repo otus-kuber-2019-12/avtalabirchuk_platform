@@ -1,0 +1,7 @@
+image:
+  repository: atalabirchuk/frontend
+  tag: latest
+ingress:
+#  host: develop.kubernetes-platform-demo.express42.io
+  host: 35.242.165.12
+environment: develop
