@@ -6,15 +6,16 @@ metadata:
 spec:
   order: 10
   selector: app == "netperf-operator"
-  ingress:
+  ingress: 
     - action: Allow
       source:
-        selector: netperf-role == "netperf-client"
+        selector: netperf-type == "client"
+#        selector: netperf-role == "netperf-server" 
     - action: Log
     - action: Deny
   egress:
     - action: Allow
-      destination:
-      selector: netperf-role == "netperf-client"
+      source:
+        selector: netperf-type == "client"
     - action: Log
     - action: Deny
