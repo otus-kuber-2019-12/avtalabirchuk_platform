@@ -21,7 +21,7 @@
               - name: "JOURNAL_DIRECTORY"
                 value: "/var/log/journal"
               - name: "POD_IDENTIFIER"
-                value: "label"
+                value: "name"
               - name: "POD_IDENTIFIER_LABEL"
                 value: "netperf-type"
               - name: "IPTABLES_LOG_PREFIX"
