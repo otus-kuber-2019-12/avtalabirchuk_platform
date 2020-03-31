@@ -1,0 +1,20 @@
+Хранилище Артефактов поставки Урок 14
+Harbor
+ - api security scan
+
+Хранение Артефактов 
+ - Anchore
+ - jenkins + kubernetes + security scan
+
+JFrog Arifactory
+ - стильно модно молодежно, но он платный
+Nexus
+ - npm
+ - python
+ -rpm
+ - js 
+ - java
+
+snyk - инструмент который сканирует образ на секурность
+
+Xray  - 
