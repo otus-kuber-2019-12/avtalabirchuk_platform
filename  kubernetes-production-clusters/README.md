@@ -275,3 +275,8 @@ kubeadm join 10.156.0.21:6443 --token 66yegt.c4f0gcrr64yye8rm \
         kube-system   kube-scheduler-master-1                    1/1     Running   1          33m
         kube-system   kube-scheduler-master-2                    1/1     Running   0          19m
         kube-system   kube-scheduler-master-3                    1/1     Running   0          17m
+
+### удалить worker node from cluster
+ 1. `kubectl drain nodename`
+ 2. `kubectl delete node nodename`
+ 3. on nodename `kubeadm reset`
